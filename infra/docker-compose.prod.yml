@@ -1,0 +1,13 @@
+"""Production docker-compose overrides."""
+version: '3.8'
+
+services:
+  backend:
+    environment:
+      ENVIRONMENT: production
+
+  celery-worker:
+    restart: always
+
+  frontend:
+    restart: always

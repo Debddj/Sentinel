@@ -1,0 +1,1 @@
+"""Storybook config placeholder."""

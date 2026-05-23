@@ -1,0 +1,8 @@
+[gitleaks]
+
+[[rules]]
+
+id = "sentinel-secrets"
+regex = "SECRET_KEY|DATABASE_URL|SENTRY_DSN"
+allowlist = [".env.example", "CHANGELOG.md", "docs/"
+]
