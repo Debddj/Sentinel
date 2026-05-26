@@ -1,0 +1,31 @@
+{
+    "models": [
+        {
+            "model_id": 1,
+            "name": "credit-risk-scorer",
+            "path": "ml/models/1",
+            "algorithm": "XGBoost",
+            "explainer_type": "TreeExplainer",
+            "target": "default_risk",
+            "dataset": "Give Me Some Credit (Kaggle)"
+        },
+        {
+            "model_id": 2,
+            "name": "churn-predictor",
+            "path": "ml/models/2",
+            "algorithm": "XGBoost",
+            "explainer_type": "TreeExplainer",
+            "target": "churn",
+            "dataset": "IBM Telco Customer Churn (Kaggle)"
+        },
+        {
+            "model_id": 3,
+            "name": "product-recommender",
+            "path": "ml/models/3",
+            "algorithm": "LogisticRegression",
+            "explainer_type": "LinearExplainer",
+            "target": "purchase_probability",
+            "dataset": "Online Retail II (UCI)"
+        }
+    ]
+}
