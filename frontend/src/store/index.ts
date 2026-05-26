@@ -1,4 +1,4 @@
-"""Global state management with Zustand."""
+// Global state management with Zustand
 import { create } from 'zustand';
 
 interface AppState {

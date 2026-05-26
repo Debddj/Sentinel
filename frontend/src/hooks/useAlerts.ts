@@ -1,4 +1,4 @@
-"""Alerts hook."""
+// Alerts hook
 export function useAlerts() {
   return {};
 }

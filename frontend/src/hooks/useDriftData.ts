@@ -1,4 +1,4 @@
-"""Drift data hook."""
+// Drift data hook
 export function useDriftData() {
   return {};
 }

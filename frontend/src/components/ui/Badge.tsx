@@ -1,4 +1,4 @@
-"""Badge component."""
+// Badge component
 export default function Badge() {
   return null;
 }

@@ -1,4 +1,4 @@
-"""Protected route wrapper."""
+// Protected route wrapper
 export default function ProtectedRoute() {
   return null;
 }

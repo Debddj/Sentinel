@@ -1,4 +1,4 @@
-"""Alert bell with unread count."""
+// Alert bell with unread count
 export default function AlertBell() {
   return <div>Alert Bell</div>;
 }

@@ -1,4 +1,4 @@
-"""Axios client with auth interceptor."""
+// Axios client with auth interceptor
 import axios from 'axios';
 
 const client = axios.create({
