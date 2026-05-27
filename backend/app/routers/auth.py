@@ -110,8 +110,8 @@ async def refresh(
     return TokenResponse(access_token=auth_service.create_access_token(user.id))
 
 
-@router.post("/logout", status_code=status.HTTP_204_NO_CONTENT, summary="Clear session")
-async def logout(response: Response) -> None:
+@router.post("/logout", status_code=status.HTTP_204_NO_CONTENT, response_class=Response, summary="Clear session")
+async def logout(response: Response):
     """Delete the refresh cookie."""
     response.delete_cookie(key=REFRESH_COOKIE_NAME, path="/auth")
 

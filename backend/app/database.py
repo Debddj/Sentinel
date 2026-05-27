@@ -9,15 +9,24 @@ from sqlalchemy.ext.asyncio import (
     create_async_engine,
 )
 
+import sys
+from sqlalchemy.pool import NullPool
 from app.config import settings
 
-engine = create_async_engine(
-    settings.DATABASE_URL,
-    echo=settings.ENVIRONMENT == "development",
-    pool_size=10,
-    max_overflow=20,
-    pool_pre_ping=True,   # Recycle stale connections
-)
+if "pytest" in sys.modules:
+    engine = create_async_engine(
+        settings.DATABASE_URL,
+        echo=False,
+        poolclass=NullPool,
+    )
+else:
+    engine = create_async_engine(
+        settings.DATABASE_URL,
+        echo=settings.ENVIRONMENT == "development",
+        pool_size=10,
+        max_overflow=20,
+        pool_pre_ping=True,   # Recycle stale connections
+    )
 
 AsyncSessionLocal = async_sessionmaker(
     engine,

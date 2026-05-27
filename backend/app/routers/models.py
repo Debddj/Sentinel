@@ -19,7 +19,7 @@ import io
 import json
 from typing import Any, Literal, Optional
 
-from fastapi import APIRouter, Depends, File, HTTPException, UploadFile, status
+from fastapi import APIRouter, Depends, File, HTTPException, Response, UploadFile, status
 from pydantic import BaseModel, Field
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -153,8 +153,8 @@ async def update_model(
     return ModelResponse.model_validate(model)
 
 
-@router.delete("/{model_id}", status_code=status.HTTP_204_NO_CONTENT, summary="Archive model")
-async def delete_model(model_id: int, db: AsyncSession = Depends(get_db)) -> None:
+@router.delete("/{model_id}", status_code=status.HTTP_204_NO_CONTENT, response_class=Response, summary="Archive model")
+async def delete_model(model_id: int, db: AsyncSession = Depends(get_db)):
     model = await _get_model_or_404(db, model_id)
     model.status = "archived"
     await db.commit()

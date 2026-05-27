@@ -19,22 +19,29 @@ from httpx import AsyncClient, ASGITransport
 from sqlalchemy import select, func, text
 from sqlalchemy.ext.asyncio import create_async_engine, async_sessionmaker, AsyncSession
 
+# Override database URL for integration tests BEFORE importing app/database modules
+from app.config import settings
+db_url = settings.DATABASE_URL
+base_url, _ = db_url.rsplit("/", 1)
+settings.DATABASE_URL = f"{base_url}/sentinel_test"
+
 from app.main import app
 from app.models.base import Base
 from app.models.model_registry import ModelRegistry
 from app.models.prediction import Prediction
 from app.services.auth_service import auth_service
-from app.config import settings
 
 
 # ── Fixtures ───────────────────────────────────────────────────
 @pytest_asyncio.fixture(scope="module")
 async def test_engine():
     """Isolated in-memory SQLite engine for integration tests."""
-    # Use a separate test-specific Postgres schema for isolation
+    from sqlalchemy.pool import NullPool
+    # Use the overridden DATABASE_URL pointing to sentinel_test
     engine = create_async_engine(
-        settings.DATABASE_URL.replace("/sentinel", "/sentinel_test"),
+        settings.DATABASE_URL,
         echo=False,
+        poolclass=NullPool,
     )
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.create_all)
@@ -42,6 +49,14 @@ async def test_engine():
     async with engine.begin() as conn:
         await conn.run_sync(Base.metadata.drop_all)
     await engine.dispose()
+
+
+@pytest_asyncio.fixture(autouse=True)
+async def cleanup_db(test_engine):
+    """Truncate all tables before each test to ensure isolation."""
+    async with test_engine.begin() as conn:
+        for table in reversed(Base.metadata.sorted_tables):
+            await conn.execute(text(f"TRUNCATE TABLE {table.name} CASCADE;"))
 
 
 @pytest_asyncio.fixture
