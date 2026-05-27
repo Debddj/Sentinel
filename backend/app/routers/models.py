@@ -83,7 +83,7 @@ def _parse_csv(content: bytes) -> list[dict[str, Any]]:
     reader = csv.DictReader(io.StringIO(text))
     rows = []
     for row in reader:
-        parsed = {}
+        parsed: dict[str, Any] = {}
         for k, v in row.items():
             try:
                 parsed[k] = float(v) if "." in v else int(v)
