@@ -1,1 +1,1 @@
-"""Frontend E2E tests package."""
+// Frontend E2E tests package

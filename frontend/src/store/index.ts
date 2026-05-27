@@ -7,7 +7,7 @@ interface AppState {
   models: [];
 }
 
-export const useStore = create<AppState>((set) => ({
+export const useStore = create<AppState>((_set) => ({
   isAuthenticated: false,
   alerts: [],
   models: [],

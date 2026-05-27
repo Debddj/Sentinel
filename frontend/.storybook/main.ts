@@ -1,1 +1,1 @@
-"""Storybook config placeholder."""
+// Storybook config placeholder

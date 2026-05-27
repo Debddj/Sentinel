@@ -1,4 +1,4 @@
-"""Tailwind CSS configuration."""
+// Tailwind CSS configuration
 export default {
   content: ['./src/**/*.{js,ts,jsx,tsx}'],
   theme: {
